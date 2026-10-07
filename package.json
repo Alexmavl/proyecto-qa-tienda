@@ -1,10 +1,22 @@
 {
   "name": "proyecto-qa-tienda",
   "version": "1.0.0",
-  "description": "",
+  "description": "Proyecto Final QA - Grupo 5 (Variante 1)",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "qa",
+    "playwright",
+    "testing"
+  ],
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
