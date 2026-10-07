@@ -1,79 +1,67 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * See https://playwright.dev/docs/test-configuration.
+ * Configuración de Playwright para el Proyecto Final de Aseguramiento de Calidad
+ * Grupo 5 - Variante 1: LambdaTest E-commerce Playground
+ * Navegadores requeridos: Chromium y Firefox (WebKit no aplica a Grupo 5)
  */
 export default defineConfig({
+  // Directorio donde residen las pruebas
   testDir: './tests',
-  /* Run tests in files in parallel */
-  fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+  // Timeout global máximo por test (30 segundos)
+  timeout: 30000,
+
+  // Timeout específico para las aserciones expect() (5 segundos)
+  expect: {
+    timeout: 5000,
   },
 
-  /* Configure projects for major browsers */
+  // Ejecución en paralelo dentro de archivos
+  fullyParallel: true,
+
+  // En entornos de Integración Continua (CI), prohíbe tests marcados con test.only
+  forbidOnly: !!process.env.CI,
+
+  // Reintentos: 1 reintento para mitigar fluctuaciones de red del sitio demo
+  retries: 1,
+
+  // Número de workers: en CI se usa 1 para estabilidad; localmente en paralelo
+  workers: process.env.CI ? 1 : undefined,
+
+  // Configuración de reportería: consola concisa ('list') y reporte HTML sin apertura automática
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
+
+  // Opciones compartidas para todos los proyectos
+  use: {
+    // URL base de la Variante 1 asignada al Grupo 5
+    baseURL: 'https://ecommerce-playground.lambdatest.io',
+
+    // Ejecución en modo headless
+    headless: true,
+
+    // Captura de pantalla únicamente cuando una prueba falla
+    screenshot: 'only-on-failure',
+
+    // Grabación de video preservada únicamente en caso de fallo
+    video: 'retain-on-failure',
+
+    // Registro de Playwright Trace preservado únicamente en caso de fallo
+    trace: 'retain-on-failure',
+  },
+
+  // Proyectos configurados: SOLO Chromium y Firefox (según rúbrica del Grupo 5)
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });

@@ -1,8 +1,19 @@
-
-# Playwright
+# Dependencias
 node_modules/
+
+# Resultados y reportes temporales de Playwright
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Variables de entorno
+.env
+.env.*
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+
+# NOTA: reportes/ y evidencias/ NO se ignoran porque contienen entregables del proyecto
