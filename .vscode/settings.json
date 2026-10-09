@@ -1,0 +1,11 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["tsconfig*.json"],
+      "schema": {
+        "title": "TypeScript compiler configuration file",
+        "type": "object"
+      }
+    }
+  ]
+}
