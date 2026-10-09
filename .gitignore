@@ -16,4 +16,8 @@ node_modules/
 Thumbs.db
 .DS_Store
 
+# Herramientas y logs temporales
+.playwright-mcp/
+*.log
+
 # NOTA: reportes/ y evidencias/ NO se ignoran porque contienen entregables del proyecto
