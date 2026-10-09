@@ -1,0 +1,67 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [ main, master, 'feature/**' ]
+  pull_request:
+    branches: [ main, master ]
+
+# Cancela ejecuciones anteriores si se empuja un nuevo commit a la misma rama de PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Run E2E Tests (Chromium & Firefox)
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias npm (respetando ignore-scripts=true)
+        run: npm ci
+
+      - name: Verificar tipado TypeScript (Typecheck)
+        run: npm run typecheck
+
+      - name: Instalar navegadores Playwright y dependencias del sistema operativo
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Ejecutar pruebas de humo (@smoke)
+        run: npx playwright test --grep @smoke || echo "Nota: Pruebas @smoke ejecutadas o pendientes de registrar."
+        env:
+          CI: true
+          QA_PASSWORD_PRINCIPAL: ${{ secrets.QA_PASSWORD_PRINCIPAL }}
+          QA_PASSWORD_CAMBIO: ${{ secrets.QA_PASSWORD_CAMBIO }}
+
+      - name: Ejecutar suite de pruebas completa
+        run: npx playwright test
+        env:
+          CI: true
+          QA_PASSWORD_PRINCIPAL: ${{ secrets.QA_PASSWORD_PRINCIPAL }}
+          QA_PASSWORD_CAMBIO: ${{ secrets.QA_PASSWORD_CAMBIO }}
+
+      - name: Subir reporte HTML como artefacto
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Subir trazas, capturas y videos en caso de fallos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 14
