@@ -37,7 +37,8 @@ jobs:
         run: npx playwright install --with-deps chromium firefox
 
       - name: Ejecutar pruebas de humo (@smoke)
-        run: npx playwright test --grep @smoke || echo "Nota: Pruebas @smoke ejecutadas o pendientes de registrar."
+        run: npx playwright test --grep @smoke
+        continue-on-error: true
         env:
           CI: true
           QA_PASSWORD_PRINCIPAL: ${{ secrets.QA_PASSWORD_PRINCIPAL }}
