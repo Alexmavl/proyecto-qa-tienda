@@ -12,13 +12,17 @@ import { TestUser } from '../test-data/users';
 const RUTA_LOGIN = 'index.php?route=account/login';
 const RUTA_LOGOUT = 'index.php?route=account/logout';
 
-/** Inicia sesión con el usuario dado y espera a llegar a account/account. */
+/** Inicia sesión con el usuario dado y espera a llegar a account/account o detectar alerta de seguridad. */
 export async function loginAs(page: Page, user: TestUser): Promise<void> {
   await page.goto(RUTA_LOGIN);
   await page.locator('#input-email').fill(user.email);
   await page.locator('#input-password').fill(user.password);
   await page.getByRole('button', { name: 'Login' }).click();
-  await page.waitForURL(/route=account\/account/);
+
+  await Promise.race([
+    page.waitForURL(/route=account\/account/),
+    page.locator('.alert-danger').waitFor({ state: 'visible' }),
+  ]);
 }
 
 /** Cierra sesión y verifica que el sitio muestre la página de logout. */
