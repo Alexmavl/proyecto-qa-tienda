@@ -162,5 +162,11 @@ proyecto-qa-tienda/
 ## Defectos encontrados
 
 | ID | Título | Severidad | Prioridad | Issue |
-|---|---|---|---|---|
-| | | | | |
+|---|---|:---:|:---:|:---:|
+| **DR-001** | Campo Telephone en registro acepta letras sin validación numérica | Media | P2 | [#8](https://github.com/Alexmavl/proyecto-qa-tienda/issues/8) |
+| **DR-002** | Bloqueo estricto de 1 hora por límite de intentos de login a nivel de IP sin captcha | Alta | P2 | [#9](https://github.com/Alexmavl/proyecto-qa-tienda/issues/9) |
+| **DR-003** | Edición de perfil permite guardar teléfono con texto alfabético | Media | P3 | [#10](https://github.com/Alexmavl/proyecto-qa-tienda/issues/10) |
+| **DR-004** | Formulario de reseñas permite envío de etiquetas HTML sin sanitización | Alta | P2 | [#11](https://github.com/Alexmavl/proyecto-qa-tienda/issues/11) |
+| **DR-005** | Búsqueda con caracteres especiales produce resultados inconsistentes | Media | P3 | [#12](https://github.com/Alexmavl/proyecto-qa-tienda/issues/12) |
+| **DR-006** | Botones y controles en header carecen de etiquetas accesibles aria-label (WCAG 2.1 AA) | Baja | P4 | [#13](https://github.com/Alexmavl/proyecto-qa-tienda/issues/13) |
+
