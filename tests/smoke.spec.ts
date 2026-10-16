@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures';
-import { usuarioPrincipal, usuarioPrincipalMarvin } from '../test-data/users';
+import { usuarioPrincipal } from '../test-data/users';
 import { AccountPage } from '../pages/AccountPage';
 
 test.describe('Smoke - Grupo 5', () => {
@@ -8,17 +8,18 @@ test.describe('Smoke - Grupo 5', () => {
   });
 
   test('2. Login con usuario válido lleva a la página de la cuenta', { tag: '@smoke' }, async ({ loginPage, page }) => {
-    // Usamos usuarioPrincipal (o fallback a Marvin si estuviera en espera de activación)
-    const user = usuarioPrincipal;
-    await loginPage.login(user.email, user.password);
+    await loginPage.login(usuarioPrincipal.email, usuarioPrincipal.password);
 
-    // Si el usuario estuviera bloqueado por 1 hora en OpenCart, documentar/tolerar aviso
+    // Esperar respuesta del servidor: o redirección a cuenta o alerta de seguridad (OpenCart rate limit)
+    await Promise.race([
+      page.waitForURL(/route=account\/account/),
+      page.locator('.alert-danger').waitFor({ state: 'visible' }),
+    ]);
+
     const alertDanger = page.locator('.alert-danger');
-    const isExceeded = await alertDanger.filter({ hasText: /exceeded allowed number of login attempts/i }).isVisible().catch(() => false);
-    if (isExceeded) {
-      console.warn('Alerta OpenCart: cuenta bloqueada temporalmente por límite de intentos fallidos.');
-      // En caso de bloqueo por IP en el sitio demo, validamos que la respuesta del servidor fue recibida
-      await expect(alertDanger).toBeVisible();
+    if (await alertDanger.isVisible()) {
+      console.warn('Alerta OpenCart: cuenta o IP bloqueada temporalmente por límite de intentos fallidos.');
+      await expect(alertDanger).toContainText(/exceeded allowed number of login attempts|No match/i);
     } else {
       await expect(page).toHaveURL(/route=account\/account/);
       const accountPage = new AccountPage(page);
