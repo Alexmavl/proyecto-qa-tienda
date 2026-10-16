@@ -61,7 +61,7 @@ export class AccountPage {
 
   /** Navega directamente a la página principal de la cuenta */
   async goto(): Promise<void> {
-    await this.page.goto('index.php?route=account/account');
+    await this.page.goto('index.php?route=account/account', { waitUntil: 'domcontentloaded' });
   }
 
   /** Verifica que la página de cuenta haya cargado correctamente */
@@ -72,7 +72,7 @@ export class AccountPage {
 
   /** Ejecuta el cierre de sesión */
   async logout(): Promise<void> {
-    await this.page.goto('index.php?route=account/logout');
+    await this.page.goto('index.php?route=account/logout', { waitUntil: 'domcontentloaded' });
   }
 
   /** Verifica que se haya redirigido a la página de confirmación de logout */
@@ -83,7 +83,7 @@ export class AccountPage {
 
   /** Navega hacia la pantalla de edición de información de cuenta */
   async irAEditarPerfil(): Promise<void> {
-    await this.page.goto('index.php?route=account/edit');
+    await this.page.goto('index.php?route=account/edit', { waitUntil: 'domcontentloaded' });
     await expect(this.firstNameInput).toBeVisible();
   }
 
@@ -112,7 +112,7 @@ export class AccountPage {
 
   /** Navega y cambia la contraseña de la cuenta */
   async cambiarPassword(nuevaPassword: string, confirmacion: string = nuevaPassword): Promise<void> {
-    await this.page.goto('index.php?route=account/password');
+    await this.page.goto('index.php?route=account/password', { waitUntil: 'domcontentloaded' });
     await this.newPasswordInput.fill(nuevaPassword);
     await this.confirmPasswordInput.fill(confirmacion);
     await this.savePasswordButton.click();
