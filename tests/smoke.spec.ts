@@ -33,9 +33,18 @@ test.describe('Smoke - Grupo 5', () => {
     await accountPage.expectLogoutPage();
   });
 
-  // -------------------------------------------------------------
-  // BLOQUE ASIGNADO A WILSON (Paso 4.2):
-  // 4) La página principal carga con las categorías visibles.
-  // 5) La navegación a un producto carga su detalle sin errores visibles (escuchando page.on('pageerror')).
-  // -------------------------------------------------------------
+  test('4. La página principal carga con las categorías visibles', { tag: '@smoke' }, async ({ homePage }) => {
+    await homePage.expectCategoriasVisibles();
+  });
+
+  test('5. La navegación a un producto carga su detalle sin errores JS', { tag: '@smoke' }, async ({ page, productPage }) => {
+    // Escuchar errores de JavaScript no capturados en la consola
+    const erroresJS: string[] = [];
+    page.on('pageerror', (exception) => {
+      erroresJS.push(exception.message);
+    });
+
+    await productPage.expectDetalleVisible();
+    expect(erroresJS).toEqual([]);
+  });
 });

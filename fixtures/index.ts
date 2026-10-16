@@ -3,7 +3,10 @@ import * as path from 'path';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { AccountPage } from '../pages/AccountPage';
+import { HomePage } from '../pages/HomePage';
+import { ProductPage } from '../pages/ProductPage';
 import { usuarioPrincipal } from '../test-data/users';
+import { productoPrincipal } from '../test-data/products';
 import { loginAs } from '../helpers/auth';
 
 /**
@@ -15,13 +18,9 @@ export type AppFixtures = {
   registerPage: RegisterPage;
   accountPage: AccountPage;
 
-  // -------------------------------------------------------------
-  // NOTA PARA WILSON (Paso 3.4):
-  // Aquí se agregarán los fixtures de catálogo:
-  // homePage: HomePage;
-  // productPage: ProductPage;
-  // authenticatedProductPage: ProductPage;
-  // -------------------------------------------------------------
+  homePage: HomePage;
+  productPage: ProductPage;
+  authenticatedProductPage: ProductPage;
 };
 
 /**
@@ -49,6 +48,28 @@ export const test = base.extend<AppFixtures & { autoScreenshotOnFailure: void }>
     const accountPage = new AccountPage(page);
     await accountPage.expectLoaded();
     await use(accountPage);
+  },
+
+  /** Fixture de HomePage */
+  homePage: async ({ page }, use) => {
+    const homePage = new HomePage(page);
+    await homePage.goto();
+    await use(homePage);
+  },
+
+  /** Fixture de ProductPage abierto en el producto de prueba */
+  productPage: async ({ page }, use) => {
+    const productPage = new ProductPage(page);
+    await productPage.goto(productoPrincipal.id);
+    await use(productPage);
+  },
+
+  /** Fixture de ProductPage con sesión iniciada previamente */
+  authenticatedProductPage: async ({ page }, use) => {
+    await loginAs(page, usuarioPrincipal);
+    const productPage = new ProductPage(page);
+    await productPage.goto(productoPrincipal.id);
+    await use(productPage);
   },
 
   /**
