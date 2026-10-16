@@ -26,7 +26,7 @@ export class LoginPage {
 
   /** Navega a la página de login */
   async goto(): Promise<void> {
-    await this.page.goto('index.php?route=account/login');
+    await this.page.goto('index.php?route=account/login', { waitUntil: 'domcontentloaded' });
   }
 
   /** Llena credenciales y envía el formulario */

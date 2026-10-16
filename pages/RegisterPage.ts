@@ -54,7 +54,7 @@ export class RegisterPage {
 
   /** Navega a la página de registro */
   async goto(): Promise<void> {
-    await this.page.goto('index.php?route=account/register');
+    await this.page.goto('index.php?route=account/register', { waitUntil: 'domcontentloaded' });
   }
 
   /**
