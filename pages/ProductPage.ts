@@ -40,8 +40,8 @@ export class ProductPage {
 
   /** Selecciona la cantidad de estrellas (1 a 5) en el formulario de reseña */
   async calificar(estrellas: 1 | 2 | 3 | 4 | 5): Promise<void> {
-    const radioRating = this.page.locator(`input[name="rating"][value="${estrellas}"]`);
-    await radioRating.check({ force: true });
+    // Los radios están ocultos por CSS; se hace clic en su etiqueta visible
+    await this.page.locator(`label[for^="rating-${estrellas}-"]`).click();
   }
 
   /** Llena los campos de la reseña */
