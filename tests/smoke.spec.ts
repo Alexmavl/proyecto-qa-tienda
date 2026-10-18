@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures';
-import { usuarioPrincipal } from '../test-data/users';
+import { usuarioSmoke } from '../test-data/users';
+import { loginAs } from '../helpers/auth';
 import { AccountPage } from '../pages/AccountPage';
 
 test.describe('Smoke - Grupo 5', () => {
@@ -8,27 +9,18 @@ test.describe('Smoke - Grupo 5', () => {
   });
 
   test('2. Login con usuario válido lleva a la página de la cuenta', { tag: '@smoke' }, async ({ loginPage, page }) => {
-    await loginPage.login(usuarioPrincipal.email, usuarioPrincipal.password);
+    await loginPage.login(usuarioSmoke.email, usuarioSmoke.password);
 
-    // Esperar respuesta del servidor: o redirección a cuenta o alerta de seguridad (OpenCart rate limit)
-    await Promise.race([
-      page.waitForURL(/route=account\/account/),
-      page.locator('.alert-danger').waitFor({ state: 'visible' }),
-    ]);
-
-    const alertDanger = page.locator('.alert-danger');
-    if (await alertDanger.isVisible()) {
-      console.warn('Alerta OpenCart: cuenta o IP bloqueada temporalmente por límite de intentos fallidos.');
-      await expect(alertDanger).toContainText(/exceeded allowed number of login attempts|No match/i);
-    } else {
-      await expect(page).toHaveURL(/route=account\/account/);
-      const accountPage = new AccountPage(page);
-      await accountPage.expectLoaded();
-    }
+    await expect(page).toHaveURL(/route=account\/account/);
+    const accountPage = new AccountPage(page);
+    await accountPage.expectLoaded();
   });
 
   test('3. El cierre de sesión redirige correctamente', { tag: '@smoke' }, async ({ page }) => {
+    await loginAs(page, usuarioSmoke);
     const accountPage = new AccountPage(page);
+    await accountPage.expectLoaded();
+
     await accountPage.logout();
     await accountPage.expectLogoutPage();
   });
