@@ -43,6 +43,7 @@ jobs:
           CI: true
           QA_PASSWORD_PRINCIPAL: ${{ secrets.QA_PASSWORD_PRINCIPAL }}
           QA_PASSWORD_CAMBIO: ${{ secrets.QA_PASSWORD_CAMBIO }}
+          QA_PASSWORD_SMOKE: ${{ secrets.QA_PASSWORD_SMOKE }}
 
       - name: Ejecutar suite de pruebas completa
         run: npx playwright test
@@ -50,6 +51,7 @@ jobs:
           CI: true
           QA_PASSWORD_PRINCIPAL: ${{ secrets.QA_PASSWORD_PRINCIPAL }}
           QA_PASSWORD_CAMBIO: ${{ secrets.QA_PASSWORD_CAMBIO }}
+          QA_PASSWORD_SMOKE: ${{ secrets.QA_PASSWORD_SMOKE }}
 
       - name: Subir reporte HTML como artefacto
         uses: actions/upload-artifact@v4

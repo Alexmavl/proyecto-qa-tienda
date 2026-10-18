@@ -33,6 +33,17 @@ export const usuarioCambioPassword: TestUser = {
   password: process.env.QA_PASSWORD_CAMBIO ?? PASSWORD_LOCAL,
 };
 
+// Cuenta DEDICADA al smoke. NUNCA se usa en pruebas de login fallido: un bloqueo
+// por intentos fallidos haría que el smoke deje de validar el login real.
+// La contraseña viene de QA_PASSWORD_SMOKE (secret en CI / variable en terminal local).
+export const usuarioSmoke: TestUser = {
+  firstName: 'QA',
+  lastName: 'Grupo5 Wilson Smoke',
+  email: 'qa.grupo5.wilson.smoke@example.com',
+  telephone: '55550003',
+  password: process.env.QA_PASSWORD_SMOKE ?? '',
+};
+
 // Cuentas del compañero Marvin (mismo patrón)
 export const usuarioPrincipalMarvin: TestUser = {
   firstName: 'QA',
