@@ -161,12 +161,11 @@ proyecto-qa-tienda/
 
 ## Defectos encontrados
 
-| ID | Título | Severidad | Prioridad | Issue |
-|---|---|:---:|:---:|:---:|
-| **DR-001** | Campo Telephone en registro acepta letras sin validación numérica | Media | P2 | [#8](https://github.com/Alexmavl/proyecto-qa-tienda/issues/8) |
-| **DR-002** | Bloqueo estricto de 1 hora por límite de intentos de login a nivel de IP sin captcha | Alta | P2 | [#9](https://github.com/Alexmavl/proyecto-qa-tienda/issues/9) |
-| **DR-003** | Edición de perfil permite guardar teléfono con texto alfabético | Media | P3 | [#10](https://github.com/Alexmavl/proyecto-qa-tienda/issues/10) |
-| **DR-004** | Formulario de reseñas permite envío de etiquetas HTML sin sanitización | Alta | P2 | [#11](https://github.com/Alexmavl/proyecto-qa-tienda/issues/11) |
-| **DR-005** | Búsqueda con caracteres especiales produce resultados inconsistentes | Media | P3 | [#12](https://github.com/Alexmavl/proyecto-qa-tienda/issues/12) |
-| **DR-006** | Botones y controles en header carecen de etiquetas accesibles aria-label (WCAG 2.1 AA) | Baja | P4 | [#13](https://github.com/Alexmavl/proyecto-qa-tienda/issues/13) |
+Reportes completos en [`reportes/defectos/`](reportes/defectos/); capturas en [`evidencias/`](evidencias/).
 
+| ID | Título | Severidad | Prioridad | Issue |
+|---|---|---|---|---|
+| DR-001 | El campo Telephone del formulario de registro acepta letras y caracteres especiales sin validación de formato | Media | P2 | [#8](https://github.com/Alexmavl/proyecto-qa-tienda/issues/8) |
+| DR-002 | Tras 5 intentos fallidos la cuenta queda bloqueada 1 hora, incluso con credenciales correctas, sin aviso previo ni alternativa de desbloqueo | Media | P3 | [#9](https://github.com/Alexmavl/proyecto-qa-tienda/issues/9) |
+| DR-003 | El formulario de edición de perfil permite guardar un teléfono con letras y caracteres especiales sin mensaje de validación | Media | P3 | [#10](https://github.com/Alexmavl/proyecto-qa-tienda/issues/10) |
+| DR-006 | Enlace-icono de cierre sin nombre accesible e imagen sin `alt` en la página principal incumplen WCAG 2.1 A/AA (axe-core: `link-name`, `image-alt`) | Media | P3 | [#13](https://github.com/Alexmavl/proyecto-qa-tienda/issues/13) |
