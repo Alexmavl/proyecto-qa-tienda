@@ -161,6 +161,11 @@ proyecto-qa-tienda/
 
 ## Defectos encontrados
 
+Reportes completos en [`reportes/defectos/`](reportes/defectos/); capturas en [`evidencias/`](evidencias/).
+
 | ID | Título | Severidad | Prioridad | Issue |
 |---|---|---|---|---|
-| | | | | |
+| DR-001 | El campo Telephone del formulario de registro acepta letras y caracteres especiales sin validación de formato | Media | P2 | [#8](https://github.com/Alexmavl/proyecto-qa-tienda/issues/8) |
+| DR-002 | Tras 5 intentos fallidos la cuenta queda bloqueada 1 hora, incluso con credenciales correctas, sin aviso previo ni alternativa de desbloqueo | Media | P3 | [#9](https://github.com/Alexmavl/proyecto-qa-tienda/issues/9) |
+| DR-003 | El formulario de edición de perfil permite guardar un teléfono con letras y caracteres especiales sin mensaje de validación | Media | P3 | [#10](https://github.com/Alexmavl/proyecto-qa-tienda/issues/10) |
+| DR-006 | Enlace-icono de cierre sin nombre accesible e imagen sin `alt` en la página principal incumplen WCAG 2.1 A/AA (axe-core: `link-name`, `image-alt`) | Media | P3 | [#13](https://github.com/Alexmavl/proyecto-qa-tienda/issues/13) |
