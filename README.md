@@ -128,6 +128,18 @@ test('login válido y logout', { tag: '@regression' }, async ({ page }) => { ...
 
 Se filtran con `--grep @smoke` / `--grep @regression` (o los scripts `test:smoke` y `test:regression`).
 
+## Pruebas de accesibilidad
+
+`tests/accesibilidad.spec.ts` (etiqueta `@a11y`) audita con `@axe-core/playwright` (reglas `wcag2a` y `wcag2aa`) la home, el login, el registro y el detalle del producto principal.
+
+```bash
+npx playwright test --grep "@a11y"
+```
+
+- El JSON de violaciones de cada página se adjunta al reporte HTML (`npx playwright show-report`).
+- El resumen por página y navegador (violaciones por impacto y reglas principales) se genera en [`reportes/accesibilidad.md`](reportes/accesibilidad.md).
+- Criterio de aprobación: no debe haber violaciones `critical` fuera de las ya conocidas (DR-006 y las pestañas del producto), declaradas con su justificación en `DEFECTOS_CONOCIDOS`. Las demás se reportan sin romper la suite.
+
 ## Estructura del repositorio
 
 ```text
@@ -151,6 +163,7 @@ proyecto-qa-tienda/
 │   └── users.ts            # datos de prueba
 ├── tests/
 │   ├── smoke.spec.ts
+│   ├── accesibilidad.spec.ts
 │   ├── regression-auth.spec.ts
 │   └── regression-reviews.spec.ts
 ├── evidencias/             # capturas y evidencias

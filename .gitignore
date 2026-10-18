@@ -21,3 +21,6 @@ Thumbs.db
 *.log
 
 # NOTA: reportes/ y evidencias/ NO se ignoran porque contienen entregables del proyecto
+
+# Datos intermedios de accesibilidad (generados por tests/accesibilidad.spec.ts)
+reportes/accesibilidad-datos/
